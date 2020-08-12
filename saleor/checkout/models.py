@@ -76,7 +76,9 @@ class Checkout(ModelWithMetadata):
         related_name="checkouts",
         on_delete=models.SET_NULL,
     )
-    note = models.TextField(blank=True, default="")
+    # note = models.TextField(blank=True, default="")
+    customer_note = models.TextField(blank=True, default="")
+    delivery_note = models.TextField(blank=True, default="")
 
     currency = models.CharField(
         max_length=settings.DEFAULT_CURRENCY_CODE_LENGTH,

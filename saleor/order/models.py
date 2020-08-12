@@ -166,6 +166,7 @@ class Order(ModelWithMetadata):
     translated_discount_name = models.CharField(max_length=255, blank=True, null=True)
     display_gross_prices = models.BooleanField(default=True)
     customer_note = models.TextField(blank=True, default="")
+    delivery_note = models.TextField(blank=True, default="")
     weight = MeasurementField(
         measurement=Weight, unit_choices=WeightUnits.CHOICES, default=zero_weight
     )

@@ -382,6 +382,7 @@ class Order(CountableDjangoObjectType):
             "user",
             "voucher",
             "weight",
+            "delivery_note",
         ]
 
     @staticmethod

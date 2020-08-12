@@ -134,7 +134,7 @@ class Checkout(CountableDjangoObjectType):
             "gift_cards",
             "is_shipping_required",
             "last_change",
-            "note",
+            "customer_note",
             "quantity",
             "shipping_address",
             "shipping_method",
@@ -142,6 +142,7 @@ class Checkout(CountableDjangoObjectType):
             "user",
             "voucher_code",
             "discount",
+            "delivery_note",
         ]
         description = "Checkout object."
         model = models.Checkout

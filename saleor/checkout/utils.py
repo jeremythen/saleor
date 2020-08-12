@@ -570,7 +570,7 @@ def _process_user_data_for_order(checkout: Checkout):
         "user": checkout.user,
         "user_email": checkout.get_customer_email(),
         "billing_address": billing_address,
-        "customer_note": checkout.note,
+        "customer_note": checkout.customer_note,
     }
 
 

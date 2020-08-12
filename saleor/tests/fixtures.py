@@ -435,7 +435,8 @@ def user_checkout(customer_user):
         user=customer_user,
         billing_address=customer_user.default_billing_address,
         shipping_address=customer_user.default_shipping_address,
-        note="Test notes",
+        customer_note="Test notes",
+        delivery_note="Test delivery note",
         currency="USD",
     )
     return checkout

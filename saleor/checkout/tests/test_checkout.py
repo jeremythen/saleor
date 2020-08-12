@@ -73,7 +73,7 @@ def test_last_change_update(checkout):
     with freeze_time(datetime.datetime.now()) as frozen_datetime:
         assert checkout.last_change != frozen_datetime()
 
-        checkout.note = "Sample note"
+        checkout.customer_note = "Sample note"
         checkout.save()
 
         assert checkout.last_change == pytz.utc.localize(frozen_datetime())
@@ -688,7 +688,7 @@ def test_create_order_with_many_gift_cards(
 
 def test_note_in_created_order(checkout_with_item, address, customer_user):
     checkout_with_item.shipping_address = address
-    checkout_with_item.note = "test_note"
+    checkout_with_item.customer_note = "test_note"
     checkout_with_item.save()
     order = create_order(
         checkout=checkout_with_item,
@@ -701,7 +701,7 @@ def test_note_in_created_order(checkout_with_item, address, customer_user):
         user=customer_user,
         redirect_url="https://www.example.com",
     )
-    assert order.customer_note == checkout_with_item.note
+    assert order.customer_note == checkout_with_item.customer_note
 
 
 @pytest.mark.parametrize(

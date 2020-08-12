@@ -958,3 +958,54 @@ class CheckoutClearPrivateMeta(ClearMetaBaseMutation):
         public = False
         error_type_class = CheckoutError
         error_type_field = "checkout_errors"
+
+
+class CheckoutCustomerNoteAdd(BaseMutation):
+    checkout = graphene.Field(Checkout, description="An updated checkout.")
+
+    class Arguments:
+        checkout_id = graphene.ID(description="Checkout ID.")
+        customer_note = graphene.String(required=True, description="Customer's note.")
+
+    class Meta:
+        description = "Adds a customer note in the existing checkout object."
+        error_type_class = CheckoutError
+        error_type_field = "checkout_errors"
+
+    @classmethod
+    def perform_mutation(cls, _root, info, checkout_id, customer_note):
+        checkout = cls.get_node_or_error(
+            info, checkout_id, only_type=Checkout, field="checkout_id"
+        )
+
+        checkout.customer_note = customer_note
+        cls.clean_instance(info, checkout)
+        checkout.save(update_fields=["customer_note", "last_change"])
+        info.context.plugins.checkout_updated(checkout)
+        return CheckoutCustomerNoteAdd(checkout=checkout)
+
+
+class CheckoutDeliveryNoteAdd(BaseMutation):
+    checkout = graphene.Field(Checkout, description="An updated checkout.")
+
+    class Arguments:
+        checkout_id = graphene.ID(description="Checkout ID.")
+        customer_note = graphene.String(required=True, description="Delivery note.")
+
+    class Meta:
+        description = "Adds a delivery note in the existing checkout object."
+        error_type_class = CheckoutError
+        error_type_field = "checkout_errors"
+
+    @classmethod
+    def perform_mutation(cls, _root, info, checkout_id, delivery_note):
+        checkout = cls.get_node_or_error(
+            info, checkout_id, only_type=Checkout, field="checkout_id"
+        )
+
+        checkout.delivery_note = delivery_note
+        cls.clean_instance(info, checkout)
+        checkout.save(update_fields=["delivery_note", "last_change"])
+        info.context.plugins.checkout_updated(checkout)
+        return CheckoutDeliveryNoteAdd(checkout=checkout)
+
