@@ -47,6 +47,7 @@ from .types import Checkout, CheckoutLine
 
 ERROR_DOES_NOT_SHIP = "This checkout doesn't need shipping"
 
+logger = logging.getLogger(__name__)
 
 def clean_shipping_method(
     checkout: models.Checkout,
@@ -151,6 +152,8 @@ class CheckoutCreateInput(graphene.InputObjectType):
         required=True,
     )
     email = graphene.String(description="The customer's email address.")
+    customer_note = graphene.String(description="The customer's note.")
+    delivery_note = graphene.String(description="The delivery note.")
     shipping_address = AddressInput(
         description=(
             "The mailing address to where the checkout will be shipped. "
@@ -246,6 +249,9 @@ class CheckoutCreate(ModelMutation, I18nMixin):
         if user.is_authenticated:
             email = data.pop("email", None)
             cleaned_input["email"] = email or user.email
+
+        cleaned_input['customer_note'] = data["customer_note"]
+        cleaned_input['delivery_note'] = data["delivery_note"]
 
         return cleaned_input
 
