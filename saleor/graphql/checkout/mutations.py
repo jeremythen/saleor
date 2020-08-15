@@ -47,7 +47,6 @@ from .types import Checkout, CheckoutLine
 
 ERROR_DOES_NOT_SHIP = "This checkout doesn't need shipping"
 
-logger = logging.getLogger(__name__)
 
 def clean_shipping_method(
     checkout: models.Checkout,
